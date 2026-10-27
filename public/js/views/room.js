@@ -1,7 +1,7 @@
 // Draft room: works on any Sleeper draft ID. Live drafts poll every few seconds;
 // finished drafts can be "simulated" pick by pick so the room can be tried any time.
 import { api, loadDraft, pickOwner, player } from '../data.js';
-import { esc, avatar, headshot, posTag, posColor, POS_ORDER, $, $$, toast } from '../ui.js';
+import { esc, avatar, headshot, posTag, posColor, POS_ORDER, sleeperUrl, sleeperBtn, $, $$, toast } from '../ui.js';
 import { boardHtml, openDrawer, pickDrawerHtml } from './board.js';
 
 const store = {
@@ -184,6 +184,7 @@ export default {
         <button class="btn" id="simbtn" type="button">${S.simN != null && S.sim ? '■ Pause' : S.simN != null ? '▶ Resume simulation' : '▶ Simulate this draft'}</button>
         ${S.simN != null ? '<button class="btn ghost" id="golive" type="button">Back to real picks</button>' : ''}
         <label class="scrub">Pick <input id="scrub" type="range" min="0" max="${total()}" value="${list.length}"> <b>${list.length}/${total()}</b></label>
+        ${sleeperBtn(sleeperUrl.draft(d.draft_id), 'Open in Sleeper')}
         <button class="btn ghost" id="notif" type="button">${S.notify ? '🔔 Alerts on' : '🔕 Alert me when I\'m close'}</button>
       </div>
       <div class="roomgrid">

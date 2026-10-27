@@ -12,15 +12,25 @@ Static pages plus one small serverless function. No build step.
 | Home | Hero, results ticker, league stats, this week's matchups, power top 8, awards, latest moves, hot free agents |
 | Standings | League table with form, weekly trend, **power rankings** and a **luck index** (real wins vs all-play expected wins) |
 | Scores | Any week's scoreboard, click a matchup for both lineups; auto-refreshes while games are live |
+| Lineups | **Lineup check**: flags starters who are Out/IR/Questionable or empty slots, suggests healthy bench swaps and spots bench players out-scoring starters. Read-only — each "Fix it in Sleeper" button opens the app |
 | Draft | Full snake board, **replay the whole draft pick by pick**, position filter, tap any pick for details |
 | Draft > Value & grades | Biggest steals and busts, and a draft grade per team (starter points its own picks delivered) |
 | Draft room | Paste **any** Sleeper draft ID: live board (polls every 4s), on-the-clock card with timer, best available, your roster needs, "you're 2 picks away" alerts. Finished drafts can be simulated pick by pick |
 | Awards | Weekly awards and season superlatives, plus a button that copies the recap for the group chat |
 | Moves | Every trade, waiver and free-agent move, filterable |
 | Market | Most added / dropped players on Sleeper, and who owns them in your league |
-| Team pages | Roster with season points, weekly scoring chart, results, draft class |
+| Team pages | Roster with season points, weekly scoring chart, results, draft class, lineup check, and **"Make this my team"** (remembered on that device — no login, personalization only) |
 
 Open `/?league=<league_id>` to point the site at a different league.
+
+**Can people change their lineup here?** No. Sleeper's public API is read-only and has no login, and lineups can only be
+changed inside Sleeper. The site links straight into Sleeper (league, team, matchup and draft pages) wherever a change is needed.
+
+### Art
+
+The hero trophy was generated with Meshy (text-to-3D) and lives in `public/assets/`. Everyone sees the 88KB `trophy.png`;
+wide screens without data-saver upgrade to the interactive 3D `trophy.glb` (7.6MB) once the page is idle, via
+[`<model-viewer>`](https://modelviewer.dev). Shrinking the GLB (for example with `gltf-transform optimize`) would make that upgrade lighter.
 
 ### Deploy to Vercel
 

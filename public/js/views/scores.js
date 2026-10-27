@@ -1,5 +1,5 @@
 import { matchupCard } from './shared.js';
-import { $$ } from '../ui.js';
+import { $$, sleeperUrl, sleeperBtn } from '../ui.js';
 
 export default {
   render({ model, pm }, arg) {
@@ -12,7 +12,7 @@ export default {
       .join('');
     const status = wk.live ? '<span class="live">● LIVE</span>' : wk.complete ? '<span class="final">FINAL</span>' : '<span class="soon">UPCOMING</span>';
     return `<section class="panel">
-      <header class="ph"><h2>Week ${wk.week} ${status}</h2><nav class="chips weeks">${chips}</nav></header>
+      <header class="ph"><h2>Week ${wk.week} ${status}</h2><nav class="chips weeks">${chips}</nav>${sleeperBtn(sleeperUrl.matchup(model.id), 'Open in Sleeper')}</header>
       <div class="match-grid wide">${wk.games.map((g) => matchupCard(model, pm, g, { week: wk.week, expand: true })).join('')}</div>
     </section>`;
   },

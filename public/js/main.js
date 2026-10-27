@@ -1,5 +1,5 @@
 import { loadModel, loadPlayers, clearCache } from './data.js';
-import { loading, esc, $, $$ } from './ui.js';
+import { loading, esc, $, $$, myTeam } from './ui.js';
 
 const VIEWS = {
   home: './views/home.js',
@@ -11,11 +11,13 @@ const VIEWS = {
   moves: './views/moves.js',
   market: './views/market.js',
   team: './views/team.js',
+  lineups: './views/lineups.js',
 };
 const NAV = [
   ['home', 'Home'],
   ['standings', 'Standings'],
   ['scores', 'Scores'],
+  ['lineups', 'Lineups'],
   ['draft', 'Draft'],
   ['room', 'Draft room'],
   ['awards', 'Awards'],
@@ -49,6 +51,13 @@ function fillHeader({ model }) {
     [...model.rows].map((r) => `<option value="${r.team.id}">${esc(r.team.name)}</option>`).join('');
 }
 
+function showMine() {
+  const id = myTeam.get();
+  const btn = $('#mybtn');
+  btn.hidden = id == null;
+  if (id != null) btn.href = `#/team/${id}`;
+}
+
 async function route() {
   cleanup?.();
   cleanup = null;
@@ -61,6 +70,7 @@ async function route() {
     const ctx = await getCtx();
     if (mine !== token) return;
     fillHeader(ctx);
+    showMine();
     $('#teampick').value = name === 'team' ? arg : '';
     const view = (await import(VIEWS[name])).default;
     const html = await view.render(ctx, arg);
@@ -91,6 +101,7 @@ window.addEventListener('hashchange', () => {
   route();
 });
 window.addEventListener('league:refresh', refresh);
+document.addEventListener('myteam', showMine);
 $('#refresh').addEventListener('click', refresh);
 $('#teampick').addEventListener('change', (e) => e.target.value && (location.hash = `#/team/${e.target.value}`));
 route();

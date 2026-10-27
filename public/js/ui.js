@@ -111,3 +111,30 @@ export function toast(msg) {
     setTimeout(() => el.remove(), 300);
   }, 2200);
 }
+
+/* ---------- Sleeper deep links + "my team" (device-local, no login) ---------- */
+export const sleeperUrl = {
+  league: (id) => `https://sleeper.com/leagues/${id}`,
+  team: (id) => `https://sleeper.com/leagues/${id}/team`,
+  matchup: (id) => `https://sleeper.com/leagues/${id}/matchup`,
+  draft: (id) => `https://sleeper.com/draft/nfl/${id}`,
+};
+
+export const sleeperBtn = (href, label = 'Open in Sleeper') =>
+  `<a class="btn ghost ext" href="${esc(href)}" target="_blank" rel="noreferrer noopener">${esc(label)} <span aria-hidden="true">↗</span></a>`;
+
+export const myTeam = {
+  get() {
+    try {
+      const v = localStorage.getItem('myTeam');
+      return v ? Number(v) : null;
+    } catch {
+      return null;
+    }
+  },
+  set(id) {
+    try {
+      id == null ? localStorage.removeItem('myTeam') : localStorage.setItem('myTeam', String(id));
+    } catch {}
+  },
+};

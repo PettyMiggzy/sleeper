@@ -1,5 +1,5 @@
-import { api, loadMoves, weekAwards, player } from '../data.js';
-import { esc, fmt, avatar, teamLink, headshot, posTag } from '../ui.js';
+import { api, loadMoves, weekAwards, player, lineupFor } from '../data.js';
+import { esc, fmt, avatar, teamLink, headshot, posTag, myTeam } from '../ui.js';
 import { awardCard, moveCard, matchupCard } from './shared.js';
 
 function heroArt() {
@@ -19,7 +19,7 @@ function heroArt() {
     x += step * 1.6;
   }
   d += `M${x} ${cur[0]}H${x + 44}`;
-  return `<svg class="hero-art" viewBox="0 0 580 360" aria-hidden="true">
+  return `<div class="hero-visual"><svg class="hero-art" viewBox="0 0 580 360" aria-hidden="true">
     <defs>
       <linearGradient id="ln" x1="0" x2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#c6ff3d"/></linearGradient>
       <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".45" stop-color="#ffc83d"/><stop offset="1" stop-color="#d98a00"/></linearGradient>
@@ -28,14 +28,7 @@ function heroArt() {
     </defs>
     <circle cx="446" cy="150" r="118" fill="url(#halo)" class="halo"/>
     <path d="${d}" pathLength="1" fill="none" stroke="url(#ln)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" class="draw"/>
-    <g transform="translate(446 62)" class="trophy" filter="url(#glow)">
-      <path d="M-46 0h92v40c0 38-24 66-46 70c-22-4-46-32-46-70z" fill="url(#gold)"/>
-      <path d="M-46 12h-26c0 34 14 50 38 54M46 12h26c0 34-14 50-38 54" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
-      <rect x="-8" y="108" width="16" height="34" fill="url(#gold)"/>
-      <path d="M-34 142h68l8 22h-84z" fill="url(#gold)"/>
-      <path d="M-26 14v34c0 20 8 36 18 46" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
-    </g>
-  </svg>`;
+  </svg><div class="trophy3d" id="trophy"><img src="/assets/trophy.png" alt="Championship trophy" width="512" height="512" fetchpriority="high"></div></div>`;
 }
 
 const statCard = (label, value, note = '') =>
@@ -68,6 +61,15 @@ export default {
     const owned = new Set(model.teams.flatMap((t) => t.players));
     const hot = trend.filter((t) => !owned.has(t.player_id)).slice(0, 5);
 
+    const lineupRows = model.teams.map((t) => ({ t, res: lineupFor(model, pm, t) }));
+    const flagged = lineupRows.filter((r) => r.res.status === 'bad' || r.res.status === 'warn');
+    const mine = lineupRows.find((r) => r.t.id === myTeam.get());
+    const lineupBanner = mine && mine.res.issues.length
+      ? `<div class="banner ${mine.res.status === 'bad' ? 'bad' : ''}">🚨 <span><b>${esc(mine.t.name)}</b> has ${mine.res.issues.length} lineup issue${mine.res.issues.length > 1 ? 's' : ''}: ${esc(mine.res.issues[0].text)}</span><a href="#/team/${mine.t.id}">Fix it →</a></div>`
+      : flagged.length
+        ? `<div class="banner">⚠️ <span><b>${flagged.length}</b> team${flagged.length > 1 ? 's have' : ' has'} a starter who is out or questionable.</span><a href="#/lineups">Lineup check →</a></div>`
+        : '';
+
     const spotlight = cur?.games ?? [];
     const awards = last ? weekAwards(model, pm, last.week).slice(0, 4) : [];
 
@@ -87,6 +89,8 @@ export default {
     </section>
 
     ${ticker ? `<div class="ticker" aria-label="Last week's results"><div class="track">${ticker}${ticker}</div></div>` : ''}
+
+    ${lineupBanner}
 
     <section class="stats">
       ${statCard('Points scored', fmt(totalPts, 0), `${done.length} weeks played`)}
@@ -147,5 +151,50 @@ export default {
         <p class="note">Most added across Sleeper in 24h, and unrostered in this league.</p>
       </section>
     </div>`;
+  },
+
+  // Progressive enhancement: the 88KB PNG shows everywhere; wide screens on a normal
+  // connection swap in the interactive 3D model (7.6MB) once the page is idle.
+  mount(root) {
+    const slot = root.querySelector('#trophy');
+    const heavy = navigator.connection?.saveData || !matchMedia('(min-width: 900px)').matches;
+    if (!slot || heavy) return;
+    let cancelled = false;
+    const upgrade = async () => {
+      try {
+        await import('https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js');
+        if (cancelled) return;
+        const mv = document.createElement('model-viewer');
+        mv.setAttribute('src', '/assets/trophy.glb');
+        mv.setAttribute('alt', 'Spinning 3D championship trophy');
+        mv.setAttribute('auto-rotate', '');
+        mv.setAttribute('rotation-per-second', '24deg');
+        mv.setAttribute('camera-controls', '');
+        mv.setAttribute('disable-zoom', '');
+        mv.setAttribute('interaction-prompt', 'none');
+        mv.setAttribute('shadow-intensity', '0.8');
+        mv.setAttribute('exposure', '1.8');
+        mv.setAttribute('environment-image', 'neutral');
+        mv.addEventListener(
+          'load',
+          () => {
+            if (cancelled) return;
+            mv.style.cssText = '';
+            slot.replaceChildren(mv);
+            slot.classList.add('live');
+          },
+          { once: true },
+        );
+        mv.style.cssText = 'position:absolute;opacity:0;pointer-events:none';
+        slot.append(mv);
+      } catch {
+        /* keep the PNG */
+      }
+    };
+    const id = 'requestIdleCallback' in window ? requestIdleCallback(upgrade, { timeout: 2500 }) : setTimeout(upgrade, 1200);
+    return () => {
+      cancelled = true;
+      'cancelIdleCallback' in window ? cancelIdleCallback(id) : clearTimeout(id);
+    };
   },
 };

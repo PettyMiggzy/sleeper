@@ -1,5 +1,6 @@
-import { loadDraft, draftValue, loadMoves, player, slotsOf } from '../data.js';
-import { esc, fmt, avatar, headshot, posTag, weekBars, empty } from '../ui.js';
+import { loadDraft, draftValue, loadMoves, player, slotsOf, lineupFor } from '../data.js';
+import { esc, fmt, avatar, headshot, posTag, weekBars, empty, sleeperUrl, sleeperBtn, myTeam, toast, $ } from '../ui.js';
+import { lineupCard } from './lineups.js';
 import { moveCard } from './shared.js';
 
 const stat = (label, value, note = '') => `<div class="stat"><span>${esc(label)}</span><b>${value}</b>${note ? `<em>${note}</em>` : ''}</div>`;
@@ -52,12 +53,16 @@ export default {
       )
       .join('');
 
+    const lineup = lineupFor(model, pm, team);
+    const isMine = myTeam.get() === team.id;
     return `
     <section class="teamhead">
       ${avatar(team, 84)}
       <div><p class="eyebrow">Manager · ${esc(team.owner)}</p><h1>${esc(team.name)}</h1>
-        <p class="lede">${r.w}-${r.l}${r.t ? `-${r.t}` : ''} · <b>#${r.rank}</b> in standings · <b>#${r.powerRank}</b> power ranking</p></div>
+        <p class="lede">${r.w}-${r.l}${r.t ? `-${r.t}` : ''} · <b>#${r.rank}</b> in standings · <b>#${r.powerRank}</b> power ranking</p>
+        <div class="cta"><button class="btn ${isMine ? 'primary' : ''}" id="mine" type="button">${isMine ? '★ This is my team' : '☆ Make this my team'}</button>${sleeperBtn(sleeperUrl.team(model.id), 'Open in Sleeper')}</div></div>
     </section>
+    ${lineupCard(model, pm, team, lineup, { link: false })}
     <section class="stats">
       ${stat('Points for', fmt(r.pf), `#${r.pfRank} in league`)}
       ${stat('Points against', fmt(r.pa))}
@@ -76,5 +81,20 @@ export default {
       </div>
     </div>
     ${moves.length ? `<section class="panel"><header class="ph"><h2>Recent moves</h2></header><div class="stack">${moves.map((m) => moveCard(model, pm, m)).join('')}</div></section>` : ''}`;
+  },
+
+  mount(root, { model }, arg) {
+    const id = Number(arg);
+    const btn = $('#mine', root);
+    const click = () => {
+      const on = myTeam.get() === id;
+      myTeam.set(on ? null : id);
+      btn.classList.toggle('primary', !on);
+      btn.textContent = on ? '☆ Make this my team' : '★ This is my team';
+      document.dispatchEvent(new Event('myteam'));
+      toast(on ? 'Forgot your team' : `Saved — ${model.teamBy.get(id).name} is your team on this device`);
+    };
+    btn?.addEventListener('click', click);
+    return () => btn?.removeEventListener('click', click);
   },
 };

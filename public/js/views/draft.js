@@ -1,5 +1,5 @@
 import { loadDraft, draftValue, player } from '../data.js';
-import { esc, fmt, avatar, teamLink, headshot, posTag, empty, $, $$ } from '../ui.js';
+import { esc, fmt, avatar, teamLink, headshot, posTag, empty, sleeperUrl, sleeperBtn, $, $$ } from '../ui.js';
 import { boardHtml, posFilterBar, wirePosFilter, openDrawer, pickDrawerHtml } from './board.js';
 
 const TABS = [
@@ -51,6 +51,7 @@ export default {
       <div class="toolbar">
         ${posFilterBar()}
         <div class="replay">
+          ${sleeperBtn(sleeperUrl.draft(draftId), 'Sleeper draft')}
           <label>Speed <select id="speed"><option value="320">1×</option><option value="140" selected>2×</option><option value="60">5×</option><option value="25">10×</option></select></label>
           <button class="btn primary" id="replay" type="button">▶ Replay draft</button>
         </div>

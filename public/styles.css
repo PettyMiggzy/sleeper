@@ -133,9 +133,13 @@ small { font-size: 0.78em; }
 .eyebrow { margin: 0; color: var(--accent); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; }
 .lede { color: #b5c0d6; max-width: 46ch; margin: 0 0 20px; }
 .cta { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero-art { width: 100%; height: auto; max-height: 340px; }
+.hero-visual { position: relative; }
+.hero-art { width: 100%; height: auto; max-height: 340px; display: block; }
+.trophy3d { position: absolute; left: 50%; width: 44%; top: 0; height: 100%; filter: drop-shadow(0 24px 40px rgba(255, 190, 50, 0.28)); animation: float 4.5s ease-in-out infinite; }
+.trophy3d img, .trophy3d model-viewer { width: 100%; height: 100%; object-fit: contain; display: block; --poster-color: transparent; background: transparent; }
+.trophy3d model-viewer { animation: fadein 0.6s both; }
+@keyframes fadein { from { opacity: 0; } }
 .hero-art .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.6s 0.2s ease forwards; }
-.hero-art .trophy { animation: float 4s ease-in-out infinite; transform-box: fill-box; }
 .hero-art .halo { animation: pulse 3.5s ease-in-out infinite; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @keyframes float { 50% { transform: translateY(-8px); } }
@@ -376,7 +380,8 @@ small { font-size: 0.78em; }
 /* ---------- responsive ---------- */
 @media (max-width: 980px) {
   .hero { grid-template-columns: 1fr; padding: 26px 20px 8px; }
-  .hero-art { max-height: 240px; order: -1; }
+  .hero-visual { order: -1; max-width: 420px; margin: 0 auto; width: 100%; }
+  .hero-art { max-height: 240px; }
   .cols { grid-template-columns: 1fr; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .roomgrid { grid-template-columns: 1fr; }
@@ -402,3 +407,33 @@ small { font-size: 0.78em; }
   *, *::before, *::after { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
   .hero-art .draw { stroke-dashoffset: 0; }
 }
+
+/* ---------- lineups, my team, deep links ---------- */
+.mybtn { align-self: center; padding: 6px 12px; border-radius: 999px; background: rgba(255, 200, 61, 0.14); color: var(--gold); font-weight: 600; font-size: 13px; white-space: nowrap; border: 1px solid rgba(255, 200, 61, 0.35); }
+.mybtn:hover { background: rgba(255, 200, 61, 0.24); }
+.btn.ext { font-size: 13px; padding: 7px 12px; }
+.btn.ext span { opacity: 0.7; }
+.summary { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 16px; }
+.status { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: rgba(255, 255, 255, 0.08); color: var(--muted); white-space: nowrap; }
+.status.bad { background: rgba(255, 93, 122, 0.16); color: var(--bad); }
+.status.warn { background: rgba(255, 200, 61, 0.16); color: var(--gold); }
+.status.tip { background: rgba(76, 195, 255, 0.15); color: #4cc3ff; }
+.status.ok { background: rgba(52, 224, 161, 0.14); color: var(--good); }
+.lgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; align-items: start; }
+.lgrid .mine .lcard { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(255, 200, 61, 0.35), 0 10px 30px rgba(255, 200, 61, 0.08); }
+.lcard { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 12px; }
+.lcard.bad { border-color: rgba(255, 93, 122, 0.4); }
+.lcard.warn { border-color: rgba(255, 200, 61, 0.3); }
+.lcard > header { display: flex; align-items: center; gap: 10px; }
+.issues { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.issue { display: flex; gap: 10px; }
+.issue .ic { flex: none; font-size: 16px; line-height: 1.5; }
+.issue p { margin: 0; font-size: 13.5px; }
+.swap { margin-top: 6px; font-size: 12.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ok-line { margin: 0; color: var(--good); font-size: 13.5px; }
+.lcard .btn.ext { justify-self: start; }
+.banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 18px; border-radius: var(--radius); background: rgba(255, 200, 61, 0.09); border: 1px solid rgba(255, 200, 61, 0.3); }
+.banner.bad { background: rgba(255, 93, 122, 0.09); border-color: rgba(255, 93, 122, 0.35); }
+.banner b { color: var(--text); }
+.banner a { color: var(--accent); font-weight: 600; margin-left: auto; }
+.teamhead .cta { margin-top: 12px; }
