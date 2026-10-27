@@ -1,0 +1,13 @@
+{
+  "name": "brackets-high-limit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "League site (Vercel) and Telegram bot for the Brackets High Limit fantasy football league, built on the Sleeper API",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node dev.js",
+    "bot": "node src/bot.js",
+    "cli": "node src/cli.js"
+  }
+}
