@@ -1,4 +1,4 @@
-import { lineupFor, player } from '../data.js';
+import { lineupFor } from '../lineup-data.js';
 import { esc, avatar, teamLink, sleeperUrl, sleeperBtn, myTeam } from '../ui.js';
 import { playerChip } from './shared.js';
 

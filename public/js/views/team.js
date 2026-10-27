@@ -1,4 +1,5 @@
-import { loadDraft, draftValue, loadMoves, player, slotsOf, lineupFor } from '../data.js';
+import { loadDraft, draftValue, loadMoves, player, slotsOf } from '../data.js';
+import { lineupFor } from '../lineup-data.js';
 import { esc, fmt, avatar, headshot, posTag, weekBars, empty, sleeperUrl, sleeperBtn, myTeam, toast, $ } from '../ui.js';
 import { lineupCard } from './lineups.js';
 import { moveCard } from './shared.js';

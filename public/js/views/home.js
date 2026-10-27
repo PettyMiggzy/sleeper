@@ -1,4 +1,5 @@
-import { api, loadMoves, weekAwards, player, lineupFor } from '../data.js';
+import { api, loadMoves, weekAwards, player } from '../data.js';
+import { lineupFor } from '../lineup-data.js';
 import { esc, fmt, avatar, teamLink, headshot, posTag, myTeam } from '../ui.js';
 import { awardCard, moveCard, matchupCard } from './shared.js';
 

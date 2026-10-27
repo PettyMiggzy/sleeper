@@ -1,6 +1,4 @@
 // Data layer: Sleeper API (CORS-open, no key) + everything we derive from it.
-import { checkLineup } from './lineup.js';
-
 const SLEEPER = 'https://api.sleeper.app/v1';
 export const params = new URLSearchParams(location.search);
 export const LEAGUE_ID = params.get('league') || '1395889697909133312';
@@ -175,22 +173,6 @@ export async function loadModel() {
   }
 
   return { id, league, state, teams, teamBy, weeks, done, rows: byStanding, rowBy: rows, playerPts, doneCount: n };
-}
-
-// Points per game over completed weeks the player actually scored in.
-export function playerAvg(model, pid) {
-  const rec = model.playerPts.get(pid);
-  if (!rec) return 0;
-  const vals = model.done.map((w) => rec.by[w.week]).filter((v) => v > 0);
-  return vals.length ? sum(vals) / vals.length : 0;
-}
-
-export function lineupFor(model, pm, team) {
-  const info = (pid) => {
-    const p = player(pm, pid);
-    return { name: p.name, pos: p.pos, inj: p.inj };
-  };
-  return checkLineup({ starters: team.starters, players: team.players, slots: slotsOf(model), info, avgOf: (pid) => playerAvg(model, pid) });
 }
 
 export function slotsOf(model) {
