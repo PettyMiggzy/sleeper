@@ -51,6 +51,16 @@
   .two div { background: #151515; border: 2px solid #444; border-radius: 12px; padding: 10px 12px; }
   .red { color: #ff6b6b; font-weight: 900; }
   .blue { color: #6bb8ff; font-weight: 900; }
+  .grp { background: #151515; border: 2px solid #444; border-radius: 12px; padding: 10px 12px 8px; margin: 10px 0; }
+  .grp h3 { margin: 0 0 6px; color: var(--q); font-size: .74em; letter-spacing: .07em; text-transform: uppercase; font-weight: 900; }
+  ul.chk { list-style: none; padding: 0; margin: 0; }
+  ul.chk li { position: relative; margin: 6px 0; padding-left: 1.55em; font-weight: 700; }
+  ul.chk li::before { content: "\2610"; position: absolute; left: 0; color: var(--dim); }
+  ul.chk li.af { color: #ff6b6b; font-weight: 900; }
+  ul.chk li.af::after { content: " \2014 AUTO FAIL"; }
+  details.form { margin: 12px 0; border: 2px solid #444; border-radius: 12px; padding: 4px 12px; }
+  details.form summary { font-weight: 900; padding: 12px 0; cursor: pointer; color: var(--q); letter-spacing: .04em; }
+  details.form img { width: 100%; height: auto; border-radius: 8px; background: #fff; margin-bottom: 12px; }
   footer { color: var(--dim); font-size: .7em; padding-top: 18px; }
 </style>
 </head>
@@ -76,29 +86,33 @@
 <!-- ============ PRE-TRIP (first) ============ -->
 <section id="pretrip">
   <h1>PRE-TRIP <span class="tag">INDIANA CLASS A</span></h1>
+  <div class="dim">Section 11M · Vehicle Inspection · version Sept 9, 2022</div>
   <ul>
-    <li class="say">Same order every time. Name it. Touch it. Say what I'm checking for.</li>
+    <li class="say">NAME it. POINT to it or TOUCH it. FULLY EXPLAIN what you're checking it for.</li>
+    <li>Skip that on a safety item and you get no credit for it.</li>
+    <li>Only required to inspect items on the checklist.</li>
+    <li>Student may check items off. NO other marks or writing on the sheet.</li>
   </ul>
 
-  <a class="btn" href="https://in.gov/bmv/licenses-permits-ids/files/class-a-tractor-semi-trailer-or-truck-trailer-or-bus-trailer-checklist.pdf" target="_blank" rel="noopener noreferrer">OPEN OFFICIAL BMV CLASS A CHECKLIST ↗</a>
-  <ul>
-    <li>Indiana CDL Manual, Section 11 (vehicle inspection)</li>
-    <li class="warn">Your notes say "11M." Confirm that name before you say it.</li>
-    <li class="warn">Official form reportedly opens in-cab (engine start, air brake, parking and trailer brake). Follow the FORM's order.</li>
-  </ul>
+  <div class="fail">* AIR / HYDRAULIC BRAKE CHECK: AUTOMATIC FAILURE IF NOT PERFORMED CORRECTLY</div>
 
-  <div class="sub">General 7-step method <span class="dim">(standard CDL manual)</span></div>
-  <ol class="steps">
-    <li>Vehicle overview</li>
-    <li>Engine compartment</li>
-    <li>Start engine, inspect in cab</li>
-    <li>Engine off, check lights</li>
-    <li>Walk-around (tires, wheels, brakes, coupling)</li>
-    <li>Check signal lights</li>
-    <li>Start engine, check brakes</li>
-  </ol>
+  <div class="sub">Test order (Indiana form)</div>
+    <div class="grp"><h3>1 · In-vehicle / engine start</h3><ul class="chk"><li class="af">air or hydraulic brake check</li><li>parking &amp; trailer brake check</li><li>service brake check</li><li>lighting indicators</li><li>emergency equipment</li><li>windshield &amp; traffic monitoring devices</li><li>wipers &amp; washers</li><li>heater &amp; defroster</li><li>horn(s)</li></ul></div>
+    <div class="grp"><h3>2 · Lights operations check</h3><ul class="chk"><li>all external lights</li></ul></div>
+    <div class="grp"><h3>3 · Front of vehicle / engine area</h3><ul class="chk"><li>lenses</li><li>fluid levels</li><li>fluid &amp; air leaks</li><li>steering systems</li></ul></div>
+    <div class="grp"><h3>4 · Steering axle</h3><ul class="chk"><li>tires</li><li>rims</li><li>lug nuts</li><li>springs/mounts &amp; air bags &amp; shocks</li><li>brake lines or hoses &amp; leaks</li><li>brake contaminates</li></ul></div>
+    <div class="grp"><h3>5 · Side of vehicle</h3><ul class="chk"><li>lenses &amp; reflectors</li><li>traffic monitoring devices</li><li>battery</li><li>fuel tank(s) / DEF tank</li><li>frame(s)</li></ul></div>
+    <div class="grp"><h3>6 · Combination vehicles only <span class="tag">COMBO</span></h3><ul class="chk"><li>air &amp; electric lines &amp; connectors</li><li>fifth wheel skid plate (or pintle hook or tow hitch)</li><li>kingpin &amp; apron &amp; gap (or drawbar ring &amp; tongue, or coupler &amp; tongue)</li><li>locking &amp; safety devices</li></ul></div>
+    <div class="grp"><h3>7 · Trailer only</h3><ul class="chk"><li>landing gear &amp; clearance</li><li>reflective tape</li></ul></div>
+    <div class="grp"><h3>8 · Rear of trailer</h3><ul class="chk"><li>lenses &amp; reflectors</li></ul></div>
 
-  <div class="sub">Numbers</div>
+  <details class="form">
+    <summary>SEE THE OFFICIAL FORM</summary>
+    <img src="/assets/in-class-a-checklist.png" alt="Indiana BMV Class A checklist, Section 11M, version September 9, 2022" loading="lazy">
+  </details>
+  <a class="btn" href="https://in.gov/bmv/licenses-permits-ids/files/class-a-tractor-semi-trailer-or-truck-trailer-or-bus-trailer-checklist.pdf" target="_blank" rel="noopener noreferrer">OPEN OFFICIAL BMV PDF ↗</a>
+
+  <div class="sub">Numbers <span class="dim">(not on the form)</span></div>
   <div class="nums">
     <div><span>Steer tires, min tread</span><b>4/32"</b></div>
     <div><span>Drive + trailer tires, min tread</span><b>2/32"</b></div>
@@ -109,8 +123,6 @@
     <div><span>Leak, brakes applied, 1 min</span><b>3 single · 4 combo</b></div>
   </div>
   <div class="warn">Air numbers are from the standard CDL manual. Check them against Indiana's before the call.</div>
-
-  <div class="fail">AIR BRAKE CHECK DONE WRONG = AUTOMATIC FAIL</div>
 </section>
 
 <!-- ============ ABOUT ME ============ -->
@@ -166,7 +178,7 @@
   <h2 class="q">Walk me through a pre-trip.</h2>
   <ul>
     <li>Same order every time. Name it, touch it, explain what I'm checking for.</li>
-    <li>Use the Indiana Class A checklist.</li>
+    <li>Use the Indiana Class A checklist, Section 11M, in the form's order.</li>
     <li>Tread minimums: 4/32 on steers, 2/32 on drives and trailer.</li>
     <li>Air brake check is an automatic fail if done wrong.</li>
   </ul>
