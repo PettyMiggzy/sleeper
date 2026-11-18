@@ -61,6 +61,18 @@
   details.form { margin: 12px 0; border: 2px solid #444; border-radius: 12px; padding: 4px 12px; }
   details.form summary { font-weight: 900; padding: 12px 0; cursor: pointer; color: var(--q); letter-spacing: .04em; }
   details.form img { width: 100%; height: auto; border-radius: 8px; background: #fff; margin-bottom: 12px; }
+  .parts { display: grid; gap: 10px; margin: 12px 0; }
+  .part { background: #151515; border: 2px solid #444; border-radius: 14px; padding: 12px 14px 8px; }
+  .part .where { display: block; color: var(--dim); font-size: .6em; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+  .part h3 { margin: 2px 0 6px; font-size: 1.1em; line-height: 1.2; }
+  ul.checks { margin: 0 0 4px; padding-left: 1.1em; }
+  ul.checks li { margin: 5px 0; font-weight: 600; }
+  ul.checks li::marker { color: var(--ok); }
+  .quizbtn { width: 100%; margin: 10px 0 4px; font: 900 16px/1 inherit; letter-spacing: .05em; color: #fff; background: #1b1b1b; border: 2px solid #555; border-radius: 12px; padding: 14px 8px; }
+  .quizbtn[aria-pressed="true"] { border-color: var(--ok); color: var(--ok); }
+  .quiz .part { cursor: pointer; }
+  .quiz .part:not(.open) ul.checks { display: none; }
+  .quiz .part:not(.open) h3::after { content: "  \2192 tap"; color: var(--q); font-size: .6em; font-weight: 900; }
   footer { color: var(--dim); font-size: .7em; padding-top: 18px; }
 </style>
 </head>
@@ -69,6 +81,7 @@
 <nav class="bar" aria-label="Sections">
   <div class="jump">
     <a class="pt" href="#pretrip">PRE-TRIP</a>
+    <a class="pt" href="#parts">PARTS</a>
     <a href="#about">ABOUT ME</a>
     <a href="#teach">TEACHING</a>
     <a href="#scenarios">SCENARIOS</a>
@@ -123,6 +136,39 @@
     <div><span>Leak, brakes applied, 1 min</span><b>3 single · 4 combo</b></div>
   </div>
   <div class="warn">Air numbers are from the standard CDL manual. Check them against Indiana's before the call.</div>
+</section>
+
+<!-- ============ NAME IT & CHECK IT ============ -->
+<section id="parts">
+  <h2 class="q">Name it. Say what you check.</h2>
+  <ul>
+    <li class="say">"This is the ____. I'm checking it for ____."</li>
+    <li>One card per item on the Indiana form, grouped like the form.</li>
+  </ul>
+  <button type="button" id="quiz" class="quizbtn" aria-pressed="false">QUIZ MODE: OFF</button>
+  <div class="dim quizhint" hidden>Tap a card to show what to check.</div>
+  <div class="parts">
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Tire</h3></div><ul class="checks"><li>Tread: 4/32" minimum on steers</li><li>Cuts, bulges, exposed cord</li><li>Inflated right, not flat or low</li><li>Valve stem and cap OK</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Rim</h3></div><ul class="checks"><li>Bent or damaged</li><li>Rust trails around the lug nuts</li><li>No welding repairs on a steering-axle wheel</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Lug nuts</h3></div><ul class="checks"><li>Missing or loose</li><li>Rust streaks = loose</li><li>Cracked studs, stretched stud holes</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Springs, mounts, air bags, shocks</h3></div><ul class="checks"><li>Cracked, broken, shifted or missing leaves</li><li>Broken hangers or U-bolts</li><li>Air bag cut, leaking or flat</li><li>Shock leaking</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Brake lines and hoses</h3></div><ul class="checks"><li>Cuts, chafing, bulges</li><li>Leaks: look and listen</li><li>Fittings tight and secure</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Steering axle</span><h3>Brake contaminates</h3></div><ul class="checks"><li>Oil or grease on drum or lining</li><li>Hub seal leaking</li><li>Cracked drum</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Front of vehicle</span><h3>Lenses</h3></div><ul class="checks"><li>Clean, not cracked</li><li>Right color, working</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Front of vehicle</span><h3>Fluid levels, fluid and air leaks</h3></div><ul class="checks"><li>Oil, coolant, power steering at level</li><li>Puddles or drips under the truck</li><li>Hissing air</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Front of vehicle</span><h3>Steering system</h3></div><ul class="checks"><li>Steering wheel play</li><li>Linkage, tie rod and drag link tight</li><li>Power steering hoses and belt</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Side of vehicle</span><h3>Battery</h3></div><ul class="checks"><li>Secure, cover on</li><li>Clean terminals, no corrosion</li><li>Case not cracked or leaking</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Side of vehicle</span><h3>Fuel tank and DEF tank</h3></div><ul class="checks"><li>Mounted tight, straps good</li><li>No leaks</li><li>Caps on and secure</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Side of vehicle</span><h3>Frame</h3></div><ul class="checks"><li>Cracks, bends, sagging</li><li>Missing or loose fasteners</li><li>Cross members in place</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Air and electric lines, connectors</h3></div><ul class="checks"><li>Glad hand seals present and not cracked</li><li>Red = emergency, blue = service, hooked up right</li><li>Lines not cut, chafed, leaking or dragging</li><li>Electrical plug seated, no bare wire</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Fifth wheel skid plate</h3></div><ul class="checks"><li>Mounted tight, no cracks</li><li>Greased</li><li>Sliding unit locked in place</li><li>No gap between upper and lower</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Kingpin and apron</h3></div><ul class="checks"><li>Apron not bent, cracked or broken</li><li>Kingpin not damaged</li><li>Jaws closed around the kingpin, no gap</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Locking and safety devices</h3></div><ul class="checks"><li>Release arm seated, safety latch in place</li><li>Jaws locked, no high hook</li><li>Sliding-unit pins fully engaged</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Trailer only</span><h3>Landing gear and clearance</h3></div><ul class="checks"><li>Fully raised, crank handle secured</li><li>Not bent, no missing parts, no leaks</li><li>Clearance to the tractor frame for turns</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Trailer only</span><h3>Reflective tape</h3></div><ul class="checks"><li>Present and clean</li><li>Not peeling or faded</li></ul></article>
+    <article class="part"><div class="pn"><span class="where">Rear of trailer</span><h3>Rear lenses and reflectors</h3></div><ul class="checks"><li>Clean, not cracked</li><li>Red at the rear, working</li></ul></article>
+  </div>
+  <div class="warn">Checks are from the standard CDL manual, not word-for-word from the form. The form only lists the item names.</div>
 </section>
 
 <!-- ============ ABOUT ME ============ -->
@@ -332,6 +378,19 @@
     if (document.visibilityState === 'visible' && btn.getAttribute('aria-pressed') === 'true' && !lock) {
       try { lock = await navigator.wakeLock.request('screen'); } catch (e) {}
     }
+  });
+
+  // Quiz mode: hide the checks until you tap the card.
+  var qb = document.getElementById('quiz'), hint = document.querySelector('.quizhint'), parts = document.querySelector('.parts');
+  qb.onclick = function () {
+    var on = qb.getAttribute('aria-pressed') !== 'true';
+    qb.setAttribute('aria-pressed', on); qb.textContent = 'QUIZ MODE: ' + (on ? 'ON' : 'OFF');
+    parts.classList.toggle('quiz', on); hint.hidden = !on;
+    parts.querySelectorAll('.part').forEach(function (c) { c.classList.remove('open'); });
+  };
+  parts.addEventListener('click', function (e) {
+    var c = e.target.closest('.part');
+    if (c && parts.classList.contains('quiz')) c.classList.toggle('open');
   });
 </script>
 </body>
