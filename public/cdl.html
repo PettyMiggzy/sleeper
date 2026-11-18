@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="theme-color" content="#000000">
+<title>Interview sheet</title>
+<style>
+  :root { --bg: #000; --fg: #fff; --q: #ffe14d; --dim: #b8b8b8; --line: #3a3a3a; --warn: #ff9f43; --ok: #5dff8f; --fs: 21px; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 112px; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 500 var(--fs)/1.35 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; padding: 0 16px 90px; max-width: 760px; margin-inline: auto; }
+
+  /* sticky bar: jump chips + display controls */
+  .bar { position: sticky; top: 0; z-index: 10; background: #000; border-bottom: 2px solid var(--line); margin: 0 -16px 8px; padding: 8px 16px; display: grid; gap: 8px; }
+  .jump { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .jump::-webkit-scrollbar { display: none; }
+  .jump a { flex: none; color: #000; background: var(--q); font-weight: 800; font-size: 15px; padding: 9px 14px; border-radius: 999px; text-decoration: none; letter-spacing: .02em; }
+  .jump a.pt { background: #fff; }
+  .ctl { display: flex; gap: 8px; }
+  .ctl button { flex: 1; font: 800 15px/1 inherit; color: #fff; background: #1b1b1b; border: 2px solid #555; border-radius: 12px; padding: 11px 6px; }
+  .ctl button[aria-pressed="true"] { border-color: var(--ok); color: var(--ok); }
+
+  h1 { font-size: 1.55em; line-height: 1.1; margin: 18px 0 4px; letter-spacing: -.01em; }
+  h2.q { color: var(--q); font-size: 1.3em; line-height: 1.2; font-weight: 800; margin: 0 0 8px; }
+  section { padding: 22px 0 20px; border-bottom: 2px solid var(--line); }
+  section:last-of-type { border-bottom: 0; }
+  ul { margin: 0; padding-left: 1.15em; }
+  li { margin: 7px 0; padding-left: 2px; }
+  li::marker { color: var(--q); }
+  .say { color: var(--ok); font-weight: 700; }
+  .dim { color: var(--dim); font-weight: 500; }
+  .tag { display: inline-block; font-size: .62em; font-weight: 900; letter-spacing: .08em; color: #000; background: var(--q); border-radius: 6px; padding: 3px 8px; vertical-align: middle; }
+  .warn { color: var(--warn); font-weight: 700; }
+  .warn::before { content: "⚠ "; }
+  a.btn { display: block; text-align: center; background: #fff; color: #000; font-weight: 900; text-decoration: none; padding: 15px 12px; border-radius: 14px; margin: 12px 0; font-size: 1.05em; }
+
+  /* pre-trip block stands out and sits first */
+  #pretrip { border: 3px solid #fff; border-radius: 18px; padding: 16px 14px 14px; margin-top: 12px; }
+  #pretrip h1 { margin-top: 0; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0; }
+  .steps li { counter-increment: s; display: flex; gap: 12px; align-items: baseline; margin: 6px 0; font-weight: 700; }
+  .steps li::before { content: counter(s); flex: none; width: 1.55em; height: 1.55em; display: grid; place-items: center; background: var(--q); color: #000; border-radius: 50%; font-weight: 900; font-size: .9em; }
+  .nums { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 10px 0; }
+  .nums div { background: #151515; border: 2px solid #444; border-radius: 12px; padding: 9px 12px; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .nums b { color: var(--q); white-space: nowrap; font-size: 1.05em; }
+  .fail { background: #3a0b0b; border: 3px solid #ff4d4d; border-radius: 12px; padding: 10px 12px; font-weight: 900; margin: 10px 0; }
+  .sub { color: var(--q); font-weight: 900; letter-spacing: .06em; font-size: .72em; margin: 16px 0 4px; text-transform: uppercase; }
+  .two { display: grid; gap: 10px; }
+  .two div { background: #151515; border: 2px solid #444; border-radius: 12px; padding: 10px 12px; }
+  .red { color: #ff6b6b; font-weight: 900; }
+  .blue { color: #6bb8ff; font-weight: 900; }
+  footer { color: var(--dim); font-size: .7em; padding-top: 18px; }
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="Sections">
+  <div class="jump">
+    <a class="pt" href="#pretrip">PRE-TRIP</a>
+    <a href="#about">ABOUT ME</a>
+    <a href="#teach">TEACHING</a>
+    <a href="#scenarios">SCENARIOS</a>
+    <a href="#skills">HOW-TO</a>
+    <a href="#know">KNOW</a>
+    <a href="#ask">ASK THEM</a>
+  </div>
+  <div class="ctl">
+    <button type="button" id="smaller" aria-label="Smaller text">A−</button>
+    <button type="button" id="bigger" aria-label="Bigger text">A+</button>
+    <button type="button" id="awake" aria-pressed="false">Screen on: OFF</button>
+  </div>
+</nav>
+
+<!-- ============ PRE-TRIP (first) ============ -->
+<section id="pretrip">
+  <h1>PRE-TRIP <span class="tag">INDIANA CLASS A</span></h1>
+  <ul>
+    <li class="say">Same order every time. Name it. Touch it. Say what I'm checking for.</li>
+  </ul>
+
+  <a class="btn" href="https://in.gov/bmv/licenses-permits-ids/files/class-a-tractor-semi-trailer-or-truck-trailer-or-bus-trailer-checklist.pdf" target="_blank" rel="noopener noreferrer">OPEN OFFICIAL BMV CLASS A CHECKLIST ↗</a>
+  <ul>
+    <li>Indiana CDL Manual, Section 11 (vehicle inspection)</li>
+    <li class="warn">Your notes say "11M." Confirm that name before you say it.</li>
+    <li class="warn">Official form reportedly opens in-cab (engine start, air brake, parking and trailer brake). Follow the FORM's order.</li>
+  </ul>
+
+  <div class="sub">General 7-step method <span class="dim">(standard CDL manual)</span></div>
+  <ol class="steps">
+    <li>Vehicle overview</li>
+    <li>Engine compartment</li>
+    <li>Start engine, inspect in cab</li>
+    <li>Engine off, check lights</li>
+    <li>Walk-around (tires, wheels, brakes, coupling)</li>
+    <li>Check signal lights</li>
+    <li>Start engine, check brakes</li>
+  </ol>
+
+  <div class="sub">Numbers</div>
+  <div class="nums">
+    <div><span>Steer tires, min tread</span><b>4/32"</b></div>
+    <div><span>Drive + trailer tires, min tread</span><b>2/32"</b></div>
+    <div><span>Low air warning</span><b>before 60 psi</b></div>
+    <div><span>Spring brakes pop out</span><b>20–40 psi</b></div>
+    <div><span>Governor cut-out / cut-in</span><b>~125 / ~100 psi</b></div>
+    <div><span>Leak, brakes released, 1 min</span><b>2 single · 3 combo</b></div>
+    <div><span>Leak, brakes applied, 1 min</span><b>3 single · 4 combo</b></div>
+  </div>
+  <div class="warn">Air numbers are from the standard CDL manual. Check them against Indiana's before the call.</div>
+
+  <div class="fail">AIR BRAKE CHECK DONE WRONG = AUTOMATIC FAIL</div>
+</section>
+
+<!-- ============ ABOUT ME ============ -->
+<section id="about">
+  <h2 class="q">Tell me about your driving background.</h2>
+  <ul>
+    <li>Four years, Class A. Doubles and triples. HazMat lapsed, can renew.</li>
+    <li>Started as a yard dog at Kroger warehouse, 100 to 200 moves a shift, while in CDL school.</li>
+    <li>Trained at Drive Coach, took the state CDL test on C1's lot.</li>
+    <li>Then drove for Trans Service hauling Kroger loads.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">Why do you want to teach, and why C1?</h2>
+  <ul>
+    <li>I like helping people learn the ropes, and I have real experience to pass on.</li>
+    <li>With family at home, a local role lets me be there and still do work I'm proud of.</li>
+    <li>I know C1's lot because I took my state test there.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">What makes you a good teacher?</h2>
+  <ul>
+    <li>I've done this job in the real world, so I know what goes wrong.</li>
+    <li>I'm patient and break things down until they click.</li>
+    <li>I have students say back what they're doing and why.</li>
+    <li>I care about students being safe and confident, not just passed.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">Why did you leave your last job?</h2>
+  <ul>
+    <li>I was asked to cut corners on hours of service and weights.</li>
+    <li>I wouldn't put my CDL or the public at risk, so I moved on.</li>
+    <li class="say">Stay calm and factual. Don't name-bash.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">Any tickets or accidents?</h2>
+  <ul>
+    <li>Keep it short and honest if asked.</li>
+    <li>Early on I made backing mistakes in the yard, and that's how I learned to get out and look.</li>
+    <li class="warn">Confirm this matches your record before the call.</li>
+  </ul>
+</section>
+
+<!-- ============ TEACHING ============ -->
+<section id="teach">
+  <h2 class="q">Walk me through a pre-trip.</h2>
+  <ul>
+    <li>Same order every time. Name it, touch it, explain what I'm checking for.</li>
+    <li>Use the Indiana Class A checklist.</li>
+    <li>Tread minimums: 4/32 on steers, 2/32 on drives and trailer.</li>
+    <li>Air brake check is an automatic fail if done wrong.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">How would you teach a brand new student to shift?</h2>
+  <ul>
+    <li>Safety first: empty lot, parking brake on, switch seats.</li>
+    <li>Neutral, start, first gear. Release the clutch to find the catch point.</li>
+    <li>Clutch in, shift to second, clutch out, slow.</li>
+    <li>Explain why gears grind, then have them repeat it back before practicing.</li>
+    <li>On a 10 speed: watch RPMs, listen to the engine, double clutch, learn the gear pattern.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">How would you teach a nervous student to back up?</h2>
+  <ul>
+    <li>Ask why they think it's happening.</li>
+    <li>New students: I straighten the wheel. More experienced: they fix it themselves.</li>
+    <li>Small movements, wait a couple of seconds, watch the trailer react.</li>
+    <li>Set up an angle and arc into the spot, don't come in straight.</li>
+    <li>Get out and look when unsure.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">How would you manage a class of eight with one truck?</h2>
+  <ul>
+    <li>Find each student's weak points and work on them.</li>
+    <li>Put stronger students to work helping the others.</li>
+    <li>Keep waiting students busy: practice pre-trip out loud on a parked truck, or quiz each other.</li>
+  </ul>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section id="scenarios">
+  <h2 class="q">A student fails their pre-trip and wants to quit. What do you do?</h2>
+  <ul>
+    <li class="say">"Rome wasn't built in a day. I failed my test twice myself."</li>
+    <li>Go over what they missed, then have them do the same order every time.</li>
+    <li>Redo it right away so they leave with a win.</li>
+    <li class="say">"Enjoy the mistakes, that's how you learn."</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">An overconfident student ignores your corrections. What do you do?</h2>
+  <ul>
+    <li>Safety first: calmly stop the truck or use the instructor brake.</li>
+    <li class="say">"You're doing well, and I need you to listen to my corrections out here."</li>
+    <li class="say">"If you knew everything, you'd already be out there."</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">A serious safety mistake happens. What do you do?</h2>
+  <ul>
+    <li>Stop the truck calmly, no yelling.</li>
+    <li>Explain why it was dangerous and what could have happened.</li>
+    <li>Have them redo it correctly.</li>
+    <li>Note it in their file.</li>
+  </ul>
+</section>
+
+<!-- ============ HOW-TO ============ -->
+<section id="skills">
+  <h2 class="q">How would you teach a student to couple to a trailer?</h2>
+  <ul>
+    <li>Inspect the fifth wheel, chock the trailer, line up, back until the fifth wheel just touches.</li>
+    <li>Check trailer height, connect air lines, supply air, lock trailer brakes.</li>
+    <li>Back under, then do the tug test by pulling gently forward with the trailer brakes locked.</li>
+    <li>Get out and look: jaws closed around the kingpin, no gap. Connect electrical, raise landing gear.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">How would you teach the air brake test?</h2>
+  <ul>
+    <li>Know every gauge and what it tells you, especially the air pressure gauges.</li>
+    <li>Build full pressure, shut off the engine, release the parking brake, watch for air loss.</li>
+    <li>Have the student point and explain each step back to you. Don't let them go through the motions.</li>
+  </ul>
+</section>
+
+<!-- ============ KNOW ============ -->
+<section id="know">
+  <h2 class="q">What is a high hook?</h2>
+  <ul>
+    <li class="say">"The trailer is too high when you back under it, so the fifth wheel rides up on top of the trailer plate instead of sliding under. The kingpin never locks into the jaws."</li>
+    <li>It can look coupled but isn't. That's why we do the tug test and get out and look.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">Air lines: which is which?</h2>
+  <div class="two">
+    <div><span class="red">RED = EMERGENCY.</span> Supplies air to the trailer tanks and holds the spring brakes off.</div>
+    <div><span class="blue">BLUE = SERVICE.</span> Carries the signal to apply trailer brakes when you press the pedal.</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="q">What do you know about ELDT?</h2>
+  <ul>
+    <li>Entry-Level Driver Training, the federal rule under 49 CFR Part 380.</li>
+    <li>Training Provider Registry, the federal list of approved schools.</li>
+    <li>Theory assessment minimum score is 80%.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="q">How do you keep up with DOT and FMCSA rule changes?</h2>
+  <ul>
+    <li>I check FMCSA directly and my state's licensing site.</li>
+    <li>When something changes, I update how I teach it right away.</li>
+  </ul>
+</section>
+
+<!-- ============ ASK THEM ============ -->
+<section id="ask">
+  <h2 class="q">Questions I can ask them.</h2>
+  <ul>
+    <li>Student-to-instructor ratio.</li>
+    <li>Schedule and home time.</li>
+    <li>Hourly pay and raises.</li>
+  </ul>
+</section>
+
+<footer>Private notes. Load once with signal, then leave the tab open.</footer>
+
+<script>
+  // Text size, remembered on this phone only.
+  var root = document.documentElement, fs = 21;
+  try { fs = Number(localStorage.getItem('cdl-fs')) || 21; } catch (e) {}
+  function setFs(n) { fs = Math.max(16, Math.min(34, n)); root.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('cdl-fs', fs); } catch (e) {} }
+  setFs(fs);
+  document.getElementById('smaller').onclick = function () { setFs(fs - 2); };
+  document.getElementById('bigger').onclick = function () { setFs(fs + 2); };
+
+  // Keep the screen from sleeping during the call (where the browser allows it).
+  var lock = null, btn = document.getElementById('awake');
+  function paint(on) { btn.setAttribute('aria-pressed', on); btn.textContent = 'Screen on: ' + (on ? 'ON' : 'OFF'); }
+  btn.onclick = async function () {
+    if (lock) { await lock.release(); lock = null; return paint(false); }
+    try { lock = await navigator.wakeLock.request('screen'); paint(true); lock.addEventListener('release', function () { lock = null; paint(false); }); }
+    catch (e) { btn.textContent = 'Not supported here'; }
+  };
+  document.addEventListener('visibilitychange', async function () {
+    if (document.visibilityState === 'visible' && btn.getAttribute('aria-pressed') === 'true' && !lock) {
+      try { lock = await navigator.wakeLock.request('screen'); } catch (e) {}
+    }
+  });
+</script>
+</body>
+</html>

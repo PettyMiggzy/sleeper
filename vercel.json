@@ -1,7 +1,22 @@
 {
   "outputDirectory": "public",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/CDL", "destination": "/cdl", "permanent": false },
+    { "source": "/Cdl", "destination": "/cdl", "permanent": false }
+  ],
   "headers": [
+    {
+      "source": "/cdl",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/cdl.html",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" }]
+    },
     {
       "source": "/js/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]

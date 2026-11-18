@@ -23,7 +23,14 @@ createServer(async (req, res) => {
     res.json = (body) => (res.setHeader('Content-Type', 'application/json'), res.end(JSON.stringify(body)));
     return handler(req, res);
   }
-  const rel = normalize(url.pathname === '/' ? '/index.html' : url.pathname).replace(/^(\.\.[/\\])+/, '');
+  // Mirror Vercel's cleanUrls (/cdl -> cdl.html) and the /CDL redirect in vercel.json.
+  if (url.pathname === '/CDL' || url.pathname === '/Cdl') {
+    res.statusCode = 302;
+    res.setHeader('Location', '/cdl');
+    return res.end();
+  }
+  const clean = url.pathname === '/' ? '/index.html' : extname(url.pathname) || url.pathname.startsWith('/api') ? url.pathname : `${url.pathname}.html`;
+  const rel = normalize(clean).replace(/^(\.\.[/\\])+/, '');
   try {
     const body = await readFile(join(root, rel));
     res.setHeader('Content-Type', types[extname(rel)] ?? 'application/octet-stream');
