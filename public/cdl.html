@@ -73,6 +73,10 @@
   .quiz .part { cursor: pointer; }
   .quiz .part:not(.open) ul.checks { display: none; }
   .quiz .part:not(.open) h3::after { content: "  \2192 tap"; color: var(--q); font-size: .6em; font-weight: 900; }
+  .pimg { display: block; width: 100%; height: auto; border-radius: 10px; margin: 4px 0 2px; background: #000; }
+  .part .cap { font-size: .6em; margin-bottom: 6px; }
+  .quiz .part.hasimg:not(.open) h3 { visibility: hidden; height: 0; margin: 0; }
+  .quiz .part.hasimg:not(.open) .pn::after { content: "WHAT IS THIS PART?  \2192 tap"; display: block; color: var(--q); font-weight: 900; font-size: .8em; margin: 2px 0 4px; }
   footer { color: var(--dim); font-size: .7em; padding-top: 18px; }
 </style>
 </head>
@@ -161,7 +165,7 @@
     <article class="part"><div class="pn"><span class="where">Side of vehicle</span><h3>Fuel tank and DEF tank</h3></div><ul class="checks"><li>Mounted tight, straps good</li><li>No leaks</li><li>Caps on and secure</li></ul></article>
     <article class="part"><div class="pn"><span class="where">Side of vehicle</span><h3>Frame</h3></div><ul class="checks"><li>Cracks, bends, sagging</li><li>Missing or loose fasteners</li><li>Cross members in place</li></ul></article>
     <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Air and electric lines, connectors</h3></div><ul class="checks"><li>Glad hand seals present and not cracked</li><li>Red = emergency, blue = service, hooked up right</li><li>Lines not cut, chafed, leaking or dragging</li><li>Electrical plug seated, no bare wire</li></ul></article>
-    <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Fifth wheel skid plate</h3></div><ul class="checks"><li>Mounted tight, no cracks</li><li>Greased</li><li>Sliding unit locked in place</li><li>No gap between upper and lower</li></ul></article>
+    <article class="part hasimg"><div class="pn"><span class="where">Combination only</span><h3>Fifth wheel skid plate</h3></div><img class="pimg" src="/assets/parts/fifth-wheel.webp" width="640" height="640" alt="Fifth wheel: a flat horseshoe-shaped plate with a V-shaped notch, locking jaws in the center slot and a release arm on the side"><div class="dim cap">AI illustration, for recognition only</div><ul class="checks"><li>Mounted tight, no cracks</li><li>Greased</li><li>Sliding unit locked in place</li><li>No gap between upper and lower</li></ul></article>
     <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Kingpin and apron</h3></div><ul class="checks"><li>Apron not bent, cracked or broken</li><li>Kingpin not damaged</li><li>Jaws closed around the kingpin, no gap</li></ul></article>
     <article class="part"><div class="pn"><span class="where">Combination only</span><h3>Locking and safety devices</h3></div><ul class="checks"><li>Release arm seated, safety latch in place</li><li>Jaws locked, no high hook</li><li>Sliding-unit pins fully engaged</li></ul></article>
     <article class="part"><div class="pn"><span class="where">Trailer only</span><h3>Landing gear and clearance</h3></div><ul class="checks"><li>Fully raised, crank handle secured</li><li>Not bent, no missing parts, no leaks</li><li>Clearance to the tractor frame for turns</li></ul></article>
